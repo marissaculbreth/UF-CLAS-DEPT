@@ -6,6 +6,7 @@
 *      DATE: September 2017
 */
 
+
 /**
  * Load theme CSS and JavaScript
  *
@@ -16,6 +17,11 @@ function ufclas_emily_theme_enqueue_styles() {
    // Enqueue CSS
    wp_enqueue_style('child-style', get_stylesheet_directory_uri() . '/assets/css/style.min.css', array(), $theme_version );
    wp_enqueue_style('child-style-inline', get_stylesheet_directory_uri() . '/assets/css/inline.min.css', array('child-style'), $theme_version );
+
+	 //Only load CSS for graduation page
+	 if ( is_page_template( 'page-recognition.php' ) ) {
+		 wp_enqueue_style('graduation-ceremony', get_stylesheet_directory_uri() . '/assets/css/graduation.css', array('child-style'), $theme_version );
+		}
 
 	// Load the Internet Explorer 9 specific stylesheet, to fix display issues in the Customizer.
 	if ( is_customize_preview() ) {
@@ -34,6 +40,7 @@ function ufclas_emily_theme_enqueue_styles() {
 
 	// Enqueue JAVASCRIPT
 	wp_enqueue_script( 'child-scripts', get_theme_file_uri( '/assets/js/script.min.js' ), array('jquery'), $theme_version, true );
+	wp_enqueue_script( 'bootstrap-js', get_theme_file_uri( '/assets/bootstrap/js/bootstrap.min.js' ), array('jquery'), $theme_version, true );
 
 	if ( is_singular() && comments_open() && get_option( 'thread_comments' ) ) {
 		wp_enqueue_script( 'comment-reply' );
@@ -908,3 +915,11 @@ require get_theme_file_path( '/inc/shibboleth.php' );
  * Includes ACF field needed for members only page
  */
 require get_theme_file_path( '/inc/advanced-custom-fields/metaboxes.php' );
+
+
+require get_theme_file_path('/inc/custom-functions.php');
+
+/**
+* Includes the shortcodes file
+*/
+require get_stylesheet_directory() . '/inc/shortcodes.php';
